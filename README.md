@@ -2,12 +2,12 @@
 
 Pilote 01 du 19 avril 2022 : 
 
-- PERSA n'a que 661 secondes de signal 
+- PERSA a 3801 secondes
 - GHIVA a 3463 secondes
 - MONLI a 3737 secondes
 
 ECG : 
-- Avant preproc, PERSA et MONLI ont ECG bien parasité, surtout MONLI, probablement par mouvements
+- Avant preproc, MONLI = ECG parasité par mouvements
 - Après preproc, toujours pareil, à voir comment la détection de pics réussit, d'ailleurs les pics vers le bas + onde T vers le bas suggèrent qu'il faudrait inverser les deux électrodes (= noire à gauche et rouge à droite)
 
 PPG :
@@ -25,3 +25,20 @@ EEGL :
 EEGR :
 - Avant prepoc, same pour PERSA et GHIVA, MONLI signal présent mais bruité ++ avant 150 secondes puis inutilisable (sature ++ à +1000)
 - Après preproc, signal similaire ++, notch inefficace ? à voir sur PSD
+
+
+
+
+PREPROC : 
+- = cleaning de neurokit et pour l'EEG , notch 50 Hz + detrend par high_pass 0.1Hz
+- Epoching sur 120 secs de signal par room par participant
+
+STATS :
+- Pas assez de sujets pour utiliser des tests statistiques pour le moment (possible si N > 3)
+- Visuellement :
+    - EEG : Augmentation du gamma et du beta au cours du temps, diminution du delta et theta et alpha au cours du temps (Canopy & Sea ont est profils particuliers ? Savannah aussi)
+    - HRV : Moins de variabilité cardiaque au cours du temps, + score sympa et - score vagal, Fréquence cardiaque similaire, Savonny profil parasympathique ? 
+    - EDA : + sympa en fin qu'en début ,  Canopy profil particulièrement sympa
+    - PPG : amplitude augmente de début vers fin , canopy ++ = para sympa ?
+    - 
+    
