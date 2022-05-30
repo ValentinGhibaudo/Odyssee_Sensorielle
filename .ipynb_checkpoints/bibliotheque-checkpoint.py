@@ -5,6 +5,7 @@ import scipy.fftpack
 import xarray as xr
 import joblib
 import pandas as pd
+import mne
 
 
 
@@ -60,22 +61,96 @@ def parallelize(iterator, function, n_jobs):
     result = joblib.Parallel(n_jobs = n_jobs, prefer = 'threads')(joblib.delayed(function)(i) for i in iterator)
     return result
 
-def ecg_to_metrics(ecg, srate, show = False):
-    ecg = -ecg
-    if show:
-        plt.figure(figsize=(15,10))
-        ecg_signals, info_ecg = nk.ecg_process(ecg, sampling_rate=srate, method='neurokit')
-        nk.ecg_plot(ecg_signals, rpeaks=info_ecg, sampling_rate=srate, show_type='default')
+def filter_sig(sig,fs, low, high , order=1, btype = 'mne', show = False):
     
-    clean = nk.ecg_clean(ecg, sampling_rate=srate, method='neurokit')
-    peaks, info_ecg = nk.ecg_peaks(clean, sampling_rate=srate,method='neurokit', correct_artifacts=True)
-    
-    R_peaks = info_ecg['ECG_R_Peaks'] # get R time points
-    metrics = nk.hrv(R_peaks, sampling_rate=1000, show=False, **kwargs)
-    diff_R_peaks = np.diff(R_peaks) 
-    x = vector_time
-    xp = R_peaks[1::]/srate
-    fp = diff_R_peaks
-    interpolated_hrv = np.interp(x, xp, fp, left=None, right=None, period=None) / srate
-    fci = 60 / interpolated_hrv
-    return metrics
+    if btype == 'bandpass':
+        # Paramètres de notre filtre :
+        fe = fs
+        f_lowcut = low
+        f_hicut = high
+        nyq = 0.5 * fe
+        N = order                # Ordre du filtre
+        Wn = [f_lowcut/nyq,f_hicut/nyq]  # Nyquist frequency fraction
+
+        # Création du filtre :
+        b, a = signal.butter(N, Wn, btype)
+
+        # Calcul de la reponse en fréquence du filtre
+        w, h = signal.freqz(b, a)
+
+        if show:
+            # Tracé de la réponse en fréquence du filtre
+            fig, ax = plt.subplots(figsize=(8,5)) 
+            # ax.plot(0.5*fe*w/np.pi, np.abs(h), 'b')
+            ax.semilogy(0.5*fe*w/np.pi, np.abs(h), 'b')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel('Amplitude [dB]')
+            ax.grid(which='both', axis='both')
+            plt.show()
+
+        # Applique le filtre au signal :
+        filtered_sig = signal.filtfilt(b, a, sig)
+        
+    elif btype == 'lowpass':
+        
+        # Paramètres de notre filtre :
+        fe = fs
+        f_hicut = high
+        nyq = 0.5 * fe
+        N = order                  # Ordre du filtre
+        Wn = f_hicut/nyq  # Nyquist frequency fraction
+
+        # Création du filtre :
+        b, a = signal.butter(N, Wn, btype)
+
+        # Calcul de la reponse en fréquence du filtre
+        w, h = signal.freqz(b, a)
+
+        if show:
+            # Tracé de la réponse en fréquence du filtre
+            fig, ax = plt.subplots(figsize=(8,5)) 
+            ax.plot(0.5*fe*w/np.pi, np.abs(h), 'b')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel('Amplitude [dB]')
+            ax.grid(which='both', axis='both')
+            plt.show()
+
+        # Applique le filtre au signal :
+        filtered_sig = signal.filtfilt(b, a, sig)
+        
+    elif btype == 'highpass':
+        
+        # Paramètres de notre filtre :
+        fe = fs
+        f_lowcut = low
+        nyq = 0.5 * fe
+        N = order                  # Ordre du filtre
+        Wn = f_lowcut/nyq  # Nyquist frequency fraction
+
+        # Création du filtre :
+        b, a = signal.butter(N, Wn, btype)
+
+        # Calcul de la reponse en fréquence du filtre
+        w, h = signal.freqz(b, a)
+
+        if show:
+            # Tracé de la réponse en fréquence du filtre
+            fig, ax = plt.subplots(figsize=(8,5)) 
+            ax.plot(0.5*fe*w/np.pi, np.abs(h), 'b')
+            ax.set_xlabel('frequency [Hz]')
+            ax.set_ylabel('Amplitude [dB]')
+            ax.grid(which='both', axis='both')
+            plt.show()
+
+        # Applique le filtre au signal :
+        filtered_sig = signal.filtfilt(b, a, sig)
+        
+    elif btype == 'mne':
+        filtered_sig = mne.filter.filter_data(sig, sfreq=fs, l_freq = low, h_freq = high, verbose = False)
+        
+    elif btype == 'fir':
+        
+        n = order + 1
+        a = signal.firwin(n=n, cutoff = low)
+        
+    return filtered_sig
