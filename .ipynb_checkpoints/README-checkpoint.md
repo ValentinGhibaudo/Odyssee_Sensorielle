@@ -4,7 +4,7 @@ Running order :
 * timestamps_to_df.ipynb # organize timestamps in one easily indexable dataframe
 * raw_to_da.ipynb # put data in one xarray by participant, easily indexable
 * preproc.ipynb # preprocess the data = down sample + clean + cut data and put in one xarray for every participants, easily indexable
-* data_to_metrcs.ipynb # read signals and make metrics ready for statistics
+* data_to_metrics.ipynb # read signals and make metrics ready for statistics
 * stats.ipynb # make statistics and plots with room as a predictor, and metrics as outcomes
 
 
@@ -20,6 +20,18 @@ ECG = more usable,
 EDA and EEG = difficult ...
 PPG = bad ++
 
+Mes conclusions : 
+- La PPG est inutilisable
+
+Pour l'analyse détaillée par salle:
+- L'EEG ne rend pas de différence statistique quelque soit la bande de fréquence
+- L'EDA est peu utilisable et ne rend pas de différence statistique
+- L'ECG rend des métriques de HRV en U shape probablement du fait de Savannah et Underground qui stimulent, vs les dernières salles (Sea & End Of The World) qui relaxent
+
+
+Pour l'analyse globale première vs dernières 15 minutes:
+- EEG ne rend rien statistiquement
+- ECG & EDA montrent un effet relaxant de la visite (+ de SDNN et pNN50 et - EDA Peaks)
 
 
 

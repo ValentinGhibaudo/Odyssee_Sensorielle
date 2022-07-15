@@ -20,6 +20,18 @@ ECG = more usable,
 EDA and EEG = difficult ...
 PPG = bad ++
 
+Mes conclusions : 
+- La PPG est inutilisable
+
+Pour l'analyse détaillée par salle:
+- L'EEG ne rend pas de différence statistique quelque soit la bande de fréquence
+- L'EDA est peu utilisable et ne rend pas de différence statistique
+- L'ECG rend des métriques de HRV en U shape probablement du fait de Savannah et Underground qui stimulent, vs les dernières salles (Sea & End Of The World) qui relaxent
+
+
+Pour l'analyse globale première vs dernières 15 minutes:
+- EEG ne rend rien statistiquement
+- ECG & EDA montrent un effet relaxant de la visite (+ de SDNN et pNN50 et - EDA Peaks)
 
 
 
