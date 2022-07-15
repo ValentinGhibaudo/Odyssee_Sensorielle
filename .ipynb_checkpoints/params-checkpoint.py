@@ -97,6 +97,7 @@ all_participants = [
 sessions = ['ses_01','ses_02','ses_03']
 rooms = ['Baseline','Take-off','Savannah','Canopy','Bats','Underground','Grassland','Sea','End of the world']
 dtypes = ['EEGL','EEGR','ECG','EDA','PPG']
+biosigs = ['EEG','ECG','EDA','PPG']
 srate = 1000
 down_srate = 250
 sig_by_room_duration = 90
