@@ -14,8 +14,21 @@ participants = [
  # 'P14BENLA', # data = np.loadtxt(input_file).T : ValueError: Wrong number of columns at line 869012
  'P15LEPMA',
  'P16MAUAD',
- 'P17ETRPA'
- # 'P18BLAMA' # less than 72 secs in Take-Off and bats and Underground
+ 'P17ETRPA',
+ 'P18BLAMA', # less than 72 secs in Take-Off and bats and Underground
+ # 'P19MONAL',
+    # 'P20POUAX',
+    'P21LIYAT',
+    # 'P22DALPI',
+    # 'P23VIVBA',
+    'P24BELCL',
+    'P25PEIAN',
+    # 'P26BOUHE',
+    'P27OSTMA',
+    'P28JUDGU',
+    # 'P29FICMA',
+    'P30BATDI'
+    
  ]
 
 all_participants = [
@@ -35,7 +48,19 @@ all_participants = [
  'P15LEPMA',
  'P16MAUAD',
  'P17ETRPA',
- 'P18BLAMA' # less than 72 secs in Take-Off and bats and Underground
+ 'P18BLAMA', # less than 72 secs in Take-Off and bats and Underground
+     'P19MONAL',
+    'P20POUAX',
+    'P21LIYAT',
+    'P22DALPI',
+    'P23VIVBA',
+    'P24BELCL',
+    'P25PEIAN',
+    'P26BOUHE',
+    'P27OSTMA',
+    'P28JUDGU',
+    'P29FICMA',
+    'P30BATDI'
  ]
 
 sessions = ['ses_01','ses_02','ses_03']

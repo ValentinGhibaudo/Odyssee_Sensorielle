@@ -4,7 +4,7 @@ Running order :
 * timestamps_to_df.ipynb # organize timestamps in one easily indexable dataframe
 * raw_to_da.ipynb # put data in one xarray by participant, easily indexable
 * preproc.ipynb # preprocess the data = down sample + clean + cut data and put in one xarray for every participants, easily indexable
-* data_to_metrcs.ipynb # read signals and make metrics ready for statistics
+* data_to_metrics.ipynb # read signals and make metrics ready for statistics
 * stats.ipynb # make statistics and plots with room as a predictor, and metrics as outcomes
 
 
